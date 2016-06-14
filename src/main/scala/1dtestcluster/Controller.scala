@@ -89,12 +89,11 @@ class Controller(private val root: AnchorPane, private val sigma: TextField, pri
 
             val p21 = f2.subplot(0)
             p21.title = "Cluster 1"
+            p21 += breeze.plot.hist(displayableResult(0), 100)
 
-            for(i <- 0 until displayableResult.length){
-                if (displayableResult(i).length > 0) {
-                    p21 += breeze.plot.hist(displayableResult(i), 100)
-                }
-            }
+            val p22 = f2.subplot(2, 1, 1)
+            p22.title = "Cluster 2"
+            p22 += breeze.plot.hist(displayableResult(1), 100)
 
 
             clusters.image = SwingFXUtils.toFXImage(imageToFigure(f2), null)
