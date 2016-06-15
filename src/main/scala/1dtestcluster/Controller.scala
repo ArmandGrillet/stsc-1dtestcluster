@@ -90,13 +90,19 @@ class Controller(private val root: AnchorPane, private val sigma: TextField, pri
             val p21 = f2.subplot(0)
             p21.title = "Cluster 1"
             p21.xlim = p1.xlim
-            p21 += breeze.plot.hist(displayableResult(0), 100)
+
 
             val p22 = f2.subplot(2, 1, 1)
             p22.title = "Cluster 2"
             p22.xlim = p1.xlim
-            p22 += breeze.plot.hist(displayableResult(1), 100)
 
+            if (result(0) == 0) {
+                p21 += breeze.plot.hist(displayableResult(0), 100)
+                p22 += breeze.plot.hist(displayableResult(1), 100)
+            } else {
+                p21 += breeze.plot.hist(displayableResult(1), 100)
+                p22 += breeze.plot.hist(displayableResult(0), 100)
+            }
 
             clusters.image = SwingFXUtils.toFXImage(imageToFigure(f2), null)
         }
