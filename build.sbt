@@ -1,5 +1,5 @@
 organization := "gr.armand"
-name := "stsc.uicluster"
+name := "stsc.1dtestcluster"
 
 version := "1.0"
 
