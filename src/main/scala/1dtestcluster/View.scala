@@ -9,7 +9,7 @@ import scalafxml.core.{NoDependencyResolver, FXMLView}
 object View extends JFXApp {
     val view = FXMLView(getClass.getResource("/ui.fxml"), NoDependencyResolver)
     stage = new PrimaryStage() {
-        title = "Self-Tuning Spectral Clustering"
+        title = "1D Test"
         resizable = false
         scene = new Scene(view)
     }
