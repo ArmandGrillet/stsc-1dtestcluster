@@ -78,30 +78,21 @@ class Controller(private val root: AnchorPane, private val sigma: TextField, pri
             val samplesVector = DenseVector((sample1 ++ sample2).toArray)
             val samplesMatrix = DenseMatrix.zeros[Double](observationsInput * 2, 1)
             samplesMatrix(::, 0) := samplesVector
-            val result = Algorithm.cluster(samplesMatrix, 2, 2)._2
+            val result = Algorithm.cluster(samplesMatrix)._2
 
             var displayableResult = new Array[ListBuffer[Double]](6)
             displayableResult = displayableResult.map(r => new ListBuffer[Double])
             var i = 0
-            for(i <- 0 until result.length){
+            for (i <- 0 until result.length){
                 displayableResult(result(i)) += samplesVector(i)
             }
 
-            val p21 = f2.subplot(0)
-            p21.title = "Cluster 1"
-            p21.xlim = p1.xlim
-
-
-            val p22 = f2.subplot(2, 1, 1)
-            p22.title = "Cluster 2"
-            p22.xlim = p1.xlim
-
-            if (result(0) == 0) {
-                p21 += breeze.plot.hist(displayableResult(0), 100)
-                p22 += breeze.plot.hist(displayableResult(1), 100)
-            } else {
-                p21 += breeze.plot.hist(displayableResult(1), 100)
-                p22 += breeze.plot.hist(displayableResult(0), 100)
+            for (i <- 0 until 6) {
+                if (displayableResult(i).length > 0) {
+                    val histogram = f2.subplot(3, 2, i)
+                    histogram.xlim = p1.xlim
+                    histogram += breeze.plot.hist(displayableResult(i), 100)
+                }
             }
 
             clusters.image = SwingFXUtils.toFXImage(imageToFigure(f2), null)
