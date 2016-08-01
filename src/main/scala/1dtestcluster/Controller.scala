@@ -78,18 +78,18 @@ class Controller(private val root: AnchorPane, private val sigma: TextField, pri
             val samplesVector = DenseVector((sample1 ++ sample2).toArray)
             val samplesMatrix = DenseMatrix.zeros[Double](observationsInput * 2, 1)
             samplesMatrix(::, 0) := samplesVector
-            val result = Algorithm.cluster(samplesMatrix)._2
+            val (cBest, _, clusts) = Algorithm.cluster(samplesMatrix)
 
             var displayableResult = new Array[ListBuffer[Double]](6)
             displayableResult = displayableResult.map(r => new ListBuffer[Double])
             var i = 0
-            for (i <- 0 until result.length){
-                displayableResult(result(i)) += samplesVector(i)
+            for (i <- 0 until clusts.length){
+                displayableResult(clusts(i)) += samplesVector(i)
             }
 
-            for (i <- 0 until 6) {
+            for (i <- 0 until cBest) {
                 if (displayableResult(i).length > 0) {
-                    val histogram = f2.subplot(3, 2, i)
+                    val histogram = f2.subplot(cBest, 1, i)
                     histogram.xlim = p1.xlim
                     histogram += breeze.plot.hist(displayableResult(i), 100)
                 }
