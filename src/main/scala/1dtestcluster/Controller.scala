@@ -25,7 +25,7 @@ import breeze.linalg._
 import breeze.stats.distributions.Gaussian
 import breeze.plot._
 import java.io.File
-import stsc._
+import stsc.STSC
 
 @sfxml
 class Controller(private val root: AnchorPane, private val sigma: TextField, private val observations: TextField, private val distance: TextField, val dataset: ImageView, val clusters: ImageView) {
@@ -78,7 +78,7 @@ class Controller(private val root: AnchorPane, private val sigma: TextField, pri
             val samplesVector = DenseVector((sample1 ++ sample2).toArray)
             val samplesMatrix = DenseMatrix.zeros[Double](observationsInput * 2, 1)
             samplesMatrix(::, 0) := samplesVector
-            val (cBest, _, clusts) = Algorithm.cluster(samplesMatrix)
+            val (cBest, _, clusts) = STSC.cluster(samplesMatrix)
 
             var displayableResult = new Array[ListBuffer[Double]](6)
             displayableResult = displayableResult.map(r => new ListBuffer[Double])
